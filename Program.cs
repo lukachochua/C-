@@ -1,31 +1,10 @@
-﻿Random random = new Random();
-int daysUntilExpiration = random.Next(12);
-int discountPercentage = 0;
+﻿string[] fraudulentOrderIDs = { "B123", "C456", "A345", "C15", "B177", "G3003", "C235", "B179" };
 
 
-if (daysUntilExpiration == 0)
+foreach (var fraudulentOrderID in fraudulentOrderIDs)
 {
-    Console.WriteLine("Your subscription has expired!");
+    if (fraudulentOrderID.StartsWith("B"))
+    {
+        Console.WriteLine(fraudulentOrderID);
+    }
 }
-else if (daysUntilExpiration < 2)
-{
-    discountPercentage = 20;
-    Console.WriteLine($"Your subscription expires within a day!");
-    Console.WriteLine($"Renew now and save {discountPercentage}!");
-}
-else if (daysUntilExpiration < 6)
-{
-    discountPercentage = 10;
-    Console.WriteLine($"Your subscription will expire in {daysUntilExpiration} days.");
-    Console.WriteLine($"Renew now and save {discountPercentage}!");
-}
-else if (daysUntilExpiration < 11)
-{
-    Console.WriteLine("Your subscription will expire soon. Renew now!");
-}
-else
-{
-    Console.WriteLine($"Renew now and save {discountPercentage}%.");
-}
-
-
