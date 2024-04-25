@@ -1,29 +1,36 @@
-﻿Random rnd = new Random();
+﻿string? readResult;
 
-int attack = rnd.Next(1, 11);
+string valueEntered = "";
+int numericValue = 0;
+bool validNumber = false;
 
-int Hero = 10;
-int Monster = 10;
-
-
+Console.WriteLine("Provide an integer value between 5 and 10.");
 
 do
 {
-    // Hero Attacks
-    attack = rnd.Next(1, 11);
-    Monster -= attack;
-    Console.WriteLine($"Monster was damaged and lost {attack} health and now has {Monster} health.");
+    readResult = Console.ReadLine();
+    if (readResult != null)
+    {
+        valueEntered = readResult;
+    }
 
-    if (Monster <= 0) break;
+    validNumber = int.TryParse(valueEntered, out numericValue);
 
-    // Monster Attacks
-    attack = rnd.Next(1, 11);
-    Hero -= attack;
-    Console.WriteLine($"Hero was damaged and lost {attack} health and now has {Hero} health.");
-    if (Hero <= 0) break;
-} while (Hero >= 0 || Monster >= 0);
+    if (validNumber == true)
+    {
+        if (numericValue < 5 || numericValue > 10)
+        {
+            validNumber = false;
+            Console.WriteLine($"You entedered {numericValue}. Please enter a number between 5 and 10.");
+        }
+    }
+    else
+    {
+        Console.WriteLine("Sorry, you entered an invalid number, please try again.");
+    }
 
-if (Monster <= 0)
-    Console.WriteLine("Hero Wins");
-else if (Hero <= 0)
-    Console.WriteLine("Monster Wins");
+} while (validNumber == false);
+
+Console.WriteLine($"Your input value ({numericValue}) has been accepted.");
+
+readResult = Console.ReadLine();
