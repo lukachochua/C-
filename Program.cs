@@ -264,12 +264,38 @@ do
                     continue;
                 }
 
-                if(ourAnimals[i, 2] == "Age: ?" || ourAnimals[i, 2] == "Age: ")
+
+                if (ourAnimals[i, 2] == "Age: ?" || ourAnimals[i, 2] == "Age: ")
                 {
-                    Console.WriteLine($"Enter an age for {ourAnimals[i, 0]}");
+                    string? ageInput;
+                    int age;
+
+                    // Prompt the user until a valid numeric age is provided
+                    while (true)
+                    {
+                        Console.WriteLine($"Enter a valid numeric age for {ourAnimals[i, 0]}:");
+                        ageInput = Console.ReadLine();
+
+                        if (ageInput == null)
+                        {
+                            Console.WriteLine("Input cannot be null. Please enter a valid age.");
+                            continue;
+                        }
+
+                        if (int.TryParse(ageInput, out age))
+                        {
+                            ourAnimals[i, 2] = "Age: " + age;
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid age. Please enter a valid numeric value.");
+                        }
+                    }
                 }
             }
 
+            Console.WriteLine("Age update complete.");
             readResult = Console.ReadLine();
             break;
         case "4":
