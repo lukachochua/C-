@@ -295,25 +295,71 @@ do
                     }
 
                     // Update physical appearence and validate input
-                    string? phyAppearence;
-
-                    do
+                    if (ourAnimals[i, 4] == "Physical description: ")
                     {
-                        Console.WriteLine($"Enter a physical description for {ourAnimals[i, 0]} (size, color, gender, weight, housebroken)");
-
-                        phyAppearence = Console.ReadLine();
-
-                        if (!string.IsNullOrWhiteSpace(phyAppearence) && !double.TryParse(phyAppearence, out _))
-
+                        string? phyAppearence;
+                        do
                         {
-                            break;
-                        }
-                        else
-                        {
-                            continue;
-                        }
-                    } while (true);
+                            Console.WriteLine($"Enter a physical description for {ourAnimals[i, 0]} (size, color, gender, weight, housebroken)");
 
+                            phyAppearence = Console.ReadLine();
+
+                            if (!string.IsNullOrWhiteSpace(phyAppearence) && !double.TryParse(phyAppearence, out _))
+
+                            {
+                                ourAnimals[i, 4] += phyAppearence;
+                                break;
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        } while (true);
+                    }
+
+                    if (ourAnimals[i, 3] == "Nickname: ")
+                    {
+                        string? nickName;
+                        do
+                        {
+                            Console.WriteLine($"Enter a Nickname {ourAnimals[i, 0]}");
+
+                            nickName = Console.ReadLine();
+
+                            if (!string.IsNullOrWhiteSpace(nickName) && !double.TryParse(nickName, out _))
+
+                            {
+                                ourAnimals[i, 3] += nickName;
+                                break;
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        } while (true);
+                    }
+
+                    if (ourAnimals[i, 5] == "Personality: ")
+                    {
+                        string? personality;
+                        do
+                        {
+                            Console.WriteLine($"Enter a personality description for {ourAnimals[i, 0]} (likes or dislikes, tricks, energy level)");
+
+                            personality = Console.ReadLine();
+
+                            if (!string.IsNullOrWhiteSpace(personality) && !double.TryParse(personality, out _))
+
+                            {
+                                ourAnimals[i, 5] += personality;
+                                break;
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        } while (true);
+                    }
                 }
             }
 
