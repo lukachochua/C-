@@ -1,4 +1,6 @@
 ﻿// the ourAnimals array will store the following: 
+using System.Net.NetworkInformation;
+
 string animalSpecies = "";
 string animalID = "";
 string animalAge = "";
@@ -264,13 +266,12 @@ do
                     continue;
                 }
 
-
+                // Update age and validate input
                 if (ourAnimals[i, 2] == "Age: ?" || ourAnimals[i, 2] == "Age: ")
                 {
                     string? ageInput;
                     int age;
 
-                    // Prompt the user until a valid numeric age is provided
                     while (true)
                     {
                         Console.WriteLine($"Enter a valid numeric age for {ourAnimals[i, 0]}:");
@@ -282,7 +283,7 @@ do
                             continue;
                         }
 
-                        if (int.TryParse(ageInput, out age))
+                        if (int.TryParse(ageInput, out age) && age < 25)
                         {
                             ourAnimals[i, 2] = "Age: " + age;
                             break;
@@ -292,10 +293,32 @@ do
                             Console.WriteLine("Invalid age. Please enter a valid numeric value.");
                         }
                     }
+
+                    // Update physical appearence and validate input
+                    string? phyAppearence;
+
+                    do
+                    {
+                        Console.WriteLine($"Enter a physical description for {ourAnimals[i, 0]} (size, color, gender, weight, housebroken)");
+
+                        phyAppearence = Console.ReadLine();
+
+                        if (!string.IsNullOrWhiteSpace(phyAppearence) && !double.TryParse(phyAppearence, out _))
+
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    } while (true);
+
                 }
             }
 
-            Console.WriteLine("Age update complete.");
+            Console.WriteLine("Age and physical description fields are complete for all of our friends.");
+            Console.WriteLine("Press Enter key to continue.");
             readResult = Console.ReadLine();
             break;
         case "4":
