@@ -12,19 +12,34 @@
 //     Console.WriteLine(item);
 // }
 
-string pangram = "The quick brown fox jumps over the lazy dog";
-string[] wordPangrams = pangram.Split(" ");
+// string pangram = "The quick brown fox jumps over the lazy dog";
+// string[] wordPangrams = pangram.Split(" ");
 
-string resultString = "";
+// string resultString = "";
 
-for (int i = 0; i < wordPangrams.Length; i++)
+// for (int i = 0; i < wordPangrams.Length; i++)
+// {
+//     char[] letters = wordPangrams[i].ToCharArray();
+//     Array.Reverse(letters);
+
+//     string result = new(letters);
+//     resultString += result + " ";
+// }
+
+// Console.WriteLine(resultString);
+
+string orderStream = "B123,C234,A345,C15,B177,G3003,C235,B179";
+
+string[] orders = orderStream.Split(',');
+
+foreach (string order in orders)
 {
-    char[] letters = wordPangrams[i].ToCharArray();
-    string? result = "";
-    Array.Reverse(letters);
-
-    result = new(letters);
-    resultString += result + " ";
+    if (order.Length != 4)
+    {
+        Console.WriteLine(order + "\t- Error");
+    }
+    else
+    {
+        Console.WriteLine(order);
+    }
 }
-
-Console.WriteLine(resultString);
