@@ -1,45 +1,22 @@
-﻿// string value = "abc123";
-// char[] valueArray = value.ToCharArray();
-// Array.Reverse(valueArray);
+﻿string customerName = "Ms. Barros";
 
-// // string result = new(valueArray);
-// string result = String.Join(", ", valueArray);
-// Console.WriteLine(result);
+string currentProduct = "Magic Yield";
+int currentShares = 2975000;
+decimal currentReturn = 0.1275m;
+decimal currentProfit = 55000000.0m;
 
-// string[] items = result.Split(", ");
-// foreach (string item in items)
-// {
-//     Console.WriteLine(item);
-// }
+string newProduct = "Glorious Future";
+decimal newReturn = 0.13125m;
+decimal newProfit = 63000000.0m;
 
-// string pangram = "The quick brown fox jumps over the lazy dog";
-// string[] wordPangrams = pangram.Split(" ");
+// Your logic here
+Console.WriteLine($"Dear {customerName},");
+Console.WriteLine($"Currently, you own {currentShares:N} shares at a return of {currentReturn:P}.\n");
+Console.WriteLine($"Our new product, Glorious Future offers a return of {newReturn:P}.  Given your current volume, your potential profit would be {newProfit:N}.\n");
+Console.WriteLine("Here's a quick comparison:\n");
 
-// string resultString = "";
+string comparisonMessage = $"{currentProduct.PadRight(18)}{currentReturn:p}\t{currentProfit:C}\n{newProduct.PadRight(18)}{newReturn:C}\t{newProfit:N}";
 
-// for (int i = 0; i < wordPangrams.Length; i++)
-// {
-//     char[] letters = wordPangrams[i].ToCharArray();
-//     Array.Reverse(letters);
+// Your logic here
 
-//     string result = new(letters);
-//     resultString += result + " ";
-// }
-
-// Console.WriteLine(resultString);
-
-string orderStream = "B123,C234,A345,C15,B177,G3003,C235,B179";
-
-string[] orders = orderStream.Split(',');
-
-foreach (string order in orders)
-{
-    if (order.Length != 4)
-    {
-        Console.WriteLine(order + "\t- Error");
-    }
-    else
-    {
-        Console.WriteLine(order);
-    }
-}
+Console.WriteLine($"{comparisonMessage}");
