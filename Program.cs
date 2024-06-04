@@ -11,11 +11,12 @@ decimal newProfit = 63000000.0m;
 
 // Your logic here
 Console.WriteLine($"Dear {customerName},");
+Console.WriteLine("As a customer of our Magic Yield offering we are excited to tell you about a new financial product that would dramatically increase your return.\n");
 Console.WriteLine($"Currently, you own {currentShares:N} shares at a return of {currentReturn:P}.\n");
-Console.WriteLine($"Our new product, Glorious Future offers a return of {newReturn:P}.  Given your current volume, your potential profit would be {newProfit:N}.\n");
+Console.WriteLine($"Our new product, Glorious Future offers a return of {newReturn:P}.  Given your current volume, your potential profit would be {newProfit:C}.\n");
 Console.WriteLine("Here's a quick comparison:\n");
 
-string comparisonMessage = $"{currentProduct.PadRight(18)}{currentReturn:p}\t{currentProfit:C}\n{newProduct.PadRight(18)}{newReturn:C}\t{newProfit:N}";
+string comparisonMessage = $"{currentProduct.PadRight(18)}{currentReturn:p}\t{currentProfit:C}\n{newProduct.PadRight(18)}{newReturn:P}\t{newProfit:C}";
 
 // Your logic here
 
