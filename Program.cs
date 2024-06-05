@@ -183,7 +183,7 @@ do
                         }
 
                         // #3a iterate submitted characteristic terms and search description for each term
-                        string[] givenDogChars = ourAnimals[i, 4].Split();
+                        string[] givenDogChars = ourAnimals[i, 4].Trim().Split(" ");
 
                         foreach (string givenChar in givenDogChars)
                         {
