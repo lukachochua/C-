@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 
 // ourAnimals array will store the following: 
 string animalSpecies = "";
@@ -154,7 +155,7 @@ do
             string dogDescription = "";
 
             // #4 update to "rotating" animation with countdown
-            string[] searchingIcons = { ".  ", ".. ", "..." };
+            string[] searchingIcons = { " |", " /", "--", " \\", " *" };
 
             // loop ourAnimals array to search for matching animals
             for (int i = 0; i < maxPets; i++)
@@ -168,27 +169,29 @@ do
 
                     foreach (string characteristic in dogCharactaristics)
                     {
-                        characteristic.Trim();
-                        for (int j = 5; j > -1; j--)
+                        if (characteristic != null && characteristic.Trim() != "")
                         {
-                            // #5 update "searching" message to show countdown 
-                            foreach (string icon in searchingIcons)
+                            for (int j = 5; j > -1; j--)
                             {
-                                Console.Write($"\rsearching our dog {ourAnimals[i, 3]} for {characteristic.Trim()} {icon} {i}");
-                                Thread.Sleep(250);
+                                // #5 update "searching" message to show countdown 
+                                foreach (string icon in searchingIcons)
+                                {
+                                    Console.Write($"\rsearching our dog {ourAnimals[i, 3]} for {characteristic.Trim()} {icon} {j.ToString()}");
+                                    Thread.Sleep(100);
+                                }
+
+                                Console.Write($"\r{new String(' ', Console.BufferWidth)}");
                             }
 
-                            Console.Write($"\r{new String(' ', Console.BufferWidth)}");
-                        }
+                            // #3a iterate submitted characteristic terms and search description for each term
 
-                        // #3a iterate submitted characteristic terms and search description for each term
-
-                        if (dogDescription.Contains(" " + characteristic.Trim() + " "))
-                        {
-                            // #3b update message to reflect term 
-                            // #3c set a flag "this dog" is a match
-                            Console.WriteLine($"Our dog {ourAnimals[i, 3]} matches for {characteristic}!");
-                            noMatchesDog = false;
+                            if (dogDescription.Contains(" " + characteristic.Trim() + " "))
+                            {
+                                // #3b update message to reflect term 
+                                // #3c set a flag "this dog" is a match
+                                Console.WriteLine($"Our dog {ourAnimals[i, 3]} matches for {characteristic}!");
+                                noMatchesDog = false;
+                            }
                         }
                     }
                     // #3d if "this dog" is match write match message + dog description
