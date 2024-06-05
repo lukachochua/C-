@@ -166,7 +166,6 @@ do
                     dogDescription = ourAnimals[i, 4] + "\r\n" + ourAnimals[i, 5];
 
 
-
                     foreach (string characteristic in dogCharactaristics)
                     {
                         characteristic.Trim();
@@ -183,31 +182,27 @@ do
                         }
 
                         // #3a iterate submitted characteristic terms and search description for each term
-                        string[] givenDogChars = ourAnimals[i, 4].Trim().Split(" ");
 
-                        foreach (string givenChar in givenDogChars)
+                        if (dogDescription.Contains(" " + characteristic.Trim() + " "))
                         {
-                            if (givenChar == characteristic)
-                            {
-                                // #3b update message to reflect term 
-                                // #3c set a flag "this dog" is a match
-                                Console.WriteLine(characteristic);
-                                Console.WriteLine($"\nOur dog {ourAnimals[i, 3]} matches for {characteristic}!");
-                                noMatchesDog = false;
-                            }
+                            // #3b update message to reflect term 
+                            // #3c set a flag "this dog" is a match
+                            Console.WriteLine($"Our dog {ourAnimals[i, 3]} matches for {characteristic}!");
+                            noMatchesDog = false;
                         }
                     }
-
-
-
                     // #3d if "this dog" is match write match message + dog description
+                    if (!noMatchesDog)
+                        Console.WriteLine(dogDescription);
                 }
+
             }
 
             if (noMatchesDog)
             {
                 Console.WriteLine("None of our dogs are a match found for: " + dogCharacteristic);
             }
+
 
             Console.WriteLine("\n\rPress the Enter key to continue");
             readResult = Console.ReadLine();
