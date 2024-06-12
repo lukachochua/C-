@@ -1,58 +1,65 @@
-﻿Random random = new Random();
+﻿using System;
 
-Console.WriteLine("Would you like to play? (Y/N)");
-
-if (ShouldPlay())
+string[] pettingZoo =
 {
-    PlayGame();
+    "alpacas", "capybaras", "chickens", "ducks", "emus", "geese",
+    "goats", "iguanas", "kangaroos", "lemurs", "llamas", "macaws",
+    "ostriches", "pigs", "ponies", "rabbits", "sheep", "tortoises",
+};
+
+PlanSchoolVisit("School A");
+PlanSchoolVisit("School B", 3);
+PlanSchoolVisit("School C", 2);
+
+void PlanSchoolVisit(string schoolName, int groups = 6)
+{
+    RandomizeAnimals();
+    string[,] group1 = AssignGroup(groups);
+    Console.WriteLine(schoolName);
+    PrintGroup(group1);
 }
 
-void PlayGame()
+
+void RandomizeAnimals()
 {
-    var play = true;
+    Random random = new Random();
 
-    while (play)
+    for (int i = 0; i < pettingZoo.Length; i++)
     {
-        var target = computerRoll();
-        var roll = playerRoll();
+        int r = random.Next(i, pettingZoo.Length);
 
-        Console.WriteLine($"Roll a number greater than {target} to win!");
-        Console.WriteLine($"You rolled a {roll}");
-        Console.WriteLine(WinOrLose(target, roll));
-        Console.WriteLine("\nPlay again? (Y/N)");
-
-        play = ShouldPlay();
+        string temp = pettingZoo[r];
+        pettingZoo[r] = pettingZoo[i];
+        pettingZoo[i] = temp;
     }
 }
 
-bool ShouldPlay()
+string[,] AssignGroup(int groups = 6)
 {
-    var input = Console.ReadLine()?.Trim().ToUpper();
-    return input == "Y";
+    string[,] result = new string[groups, pettingZoo.Length / groups];
+    int start = 0;
+
+    for (int i = 0; i < groups; i++)
+    {
+        for (int j = 0; j < result.GetLength(1); j++)
+        {
+            result[i, j] = pettingZoo[start++];
+        }
+    }
+
+    return result;
 }
 
-string WinOrLose(int target, int roll)
-{
-    if (target < roll)
-    {
-        return "You Win";
-    }
-    else if (target > roll)
-    {
-        return "You Lose";
-    }
-    else
-    {
-        return "It's a Draw";
-    }
-}
 
-int playerRoll()
+void PrintGroup(string[,] groups)
 {
-    return random.Next(1, 6);
-}
-
-int computerRoll()
-{
-    return random.Next(1, 6);
+    for (int i = 0; i < groups.GetLength(0); i++)
+    {
+        Console.Write($"Group {i + 1}: ");
+        for (int j = 0; j < groups.GetLength(1); j++)
+        {
+            Console.Write($"{groups[i, j]}  ");
+        }
+        Console.WriteLine();
+    }
 }
