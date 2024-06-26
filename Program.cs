@@ -1,5 +1,15 @@
 ﻿using System;
 
+/*
+A feature to determine if the player consumed the food
+A feature that updates player status depending on the food consumed
+A feature that pauses movement speed depending on the food consumed
+A feature to regenerate food in a new location
+An option to terminate the game if an unsupported character is pressed
+A feature to terminate the game if the Terminal window was resized
+*/
+
+
 Random random = new Random();
 Console.CursorVisible = false;
 int height = Console.WindowHeight - 1;
@@ -35,24 +45,28 @@ while (!shouldExit)
     }
     else
     {
-        if (PlayerIsFaster())
+        if (ShouldIncreaseSpeed())
         {
-            Move(1, false);
+            Move(speedModifier: 2);
         }
-        else if (PlayerIsSick())
+        else if (ShouldFreezePlayer())
         {
             FreezePlayer();
         }
         else
         {
-            Move(otherKeysExit: false);
+            Move(nonDirectionalKey: false);
         }
-        if (GotFood())
+
+
+        if (HasConsumedFood())
         {
             ChangePlayer();
             ShowFood();
         }
     }
+
+
 }
 
 // Returns true if the Terminal was resized 
@@ -76,24 +90,6 @@ void ShowFood()
     Console.Write(foods[food]);
 }
 
-// Returns true if the player location matches the food location
-bool GotFood()
-{
-    return playerY == foodY && playerX == foodX;
-}
-
-// Returns true if the player appearance represents a sick state
-bool PlayerIsSick()
-{
-    return player.Equals(states[2]);
-}
-
-// Returns true if the player appearance represents a fast state
-bool PlayerIsFaster()
-{
-    return player.Equals(states[1]);
-}
-
 // Changes the player to match the food consumed
 void ChangePlayer()
 {
@@ -110,12 +106,14 @@ void FreezePlayer()
 }
 
 // Reads directional input from the Console and moves the player
-void Move(int speed = 1, bool otherKeysExit = false)
+void Move(int speedModifier = 1, bool nonDirectionalKey = false)
 {
     int lastX = playerX;
     int lastY = playerY;
 
-    switch (Console.ReadKey(true).Key)
+    ConsoleKey key = Console.ReadKey(true).Key;
+
+    switch (key)
     {
         case ConsoleKey.UpArrow:
             playerY--;
@@ -124,19 +122,26 @@ void Move(int speed = 1, bool otherKeysExit = false)
             playerY++;
             break;
         case ConsoleKey.LeftArrow:
-            playerX -= speed;
+            playerX -= speedModifier;
             break;
         case ConsoleKey.RightArrow:
-            playerX += speed;
+            playerX += speedModifier;
             break;
         case ConsoleKey.Escape:
             shouldExit = true;
             break;
         default:
-            // Exit if any other keys are pressed
-            shouldExit = otherKeysExit;
+            nonDirectionalKey = true;
+            if (nonDirectionalKey)
+            {
+                shouldExit = true;
+            }
+            Console.WriteLine();
+            Console.Clear();
             break;
     }
+
+
 
     // Clear the characters at the previous position
     Console.SetCursorPosition(lastX, lastY);
@@ -152,6 +157,21 @@ void Move(int speed = 1, bool otherKeysExit = false)
     // Draw the player at the new location
     Console.SetCursorPosition(playerX, playerY);
     Console.Write(player);
+}
+
+bool HasConsumedFood()
+{
+    return (playerX == foodX) && (playerY == foodY);
+}
+
+bool ShouldFreezePlayer()
+{
+    return player == states[2];
+}
+
+bool ShouldIncreaseSpeed()
+{
+    return player == states[1];
 }
 
 // Clears the console, displays the food and player
