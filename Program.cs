@@ -1,33 +1,56 @@
 ﻿try
 {
-    Process1();
-}
-catch
-{
-    Console.WriteLine("An exception has occurred");
-}
+    int num1 = int.MaxValue;
+    int num2 = int.MaxValue;
 
-Console.WriteLine("Exit program");
-
-static void Process1()
-{
     try
     {
-        WriteMessage();
+        int result = checked(num1 + num2);
+        Console.WriteLine("Result: " + result);
     }
-    catch
+    catch (OverflowException ex)
     {
-        Console.WriteLine("Exception caught in Process1");
+        Console.WriteLine("Error: The number is too large to be represented as an integer." + ex.Message);
+    }
+
+    string str = null;
+
+    try
+    {
+        int length = str.Length;
+    }
+    catch (NullReferenceException ex)
+    {
+        Console.WriteLine("Error: The reference is null. You tried to access the Length property of a null string variable." + ex.Message);
+    }
+
+    int[] numbers = new int[5];
+
+    try
+    {
+        numbers[5] = 10; // This line will throw an IndexOutOfRangeException
+    }
+    catch (IndexOutOfRangeException ex)
+    {
+        Console.WriteLine("Error: Index out of range. You tried to access an element outside the array bounds." + ex.Message);
+    }
+
+    int num3 = 10;
+    int num4 = 0;
+
+    try
+    {
+        int result2 = num3 / num4; // This line will throw a DivideByZeroException
+    }
+    catch (DivideByZeroException ex)
+    {
+        Console.WriteLine("Error: Cannot divide by zero. " + ex.Message);
     }
 }
 
-static void WriteMessage()
+catch (Exception ex) // This catch block will catch any other unexpected exceptions
 {
-    double float1 = 3000.0;
-    double float2 = 0.0;
-    int number1 = 3000;
-    int number2 = 0;
-
-    Console.WriteLine(float1 / float2);
-    Console.WriteLine(number1 / number2);
+    Console.WriteLine("An unexpected error occurred: " + ex.Message);
 }
+
+Console.WriteLine("Exiting program.");
