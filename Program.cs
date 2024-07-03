@@ -1,56 +1,88 @@
-﻿try
+﻿string[][] userEnteredValues = new string[][]
 {
-    int num1 = int.MaxValue;
-    int num2 = int.MaxValue;
+    new string[] { "1", "2", "3"},
+    new string[] { "1", "two", "3"},
+    new string[] { "0", "1", "2"}
+};
 
-    try
-    {
-        int result = checked(num1 + num2);
-        Console.WriteLine("Result: " + result);
-    }
-    catch (OverflowException ex)
-    {
-        Console.WriteLine("Error: The number is too large to be represented as an integer." + ex.Message);
-    }
+string overallStatusMessage = "";
 
-    string str = null;
+try
+{
+    Workflow1(userEnteredValues);
+    overallStatusMessage = "operating procedure complete";
+}
+catch (DivideByZeroException ex)
+{
+    overallStatusMessage = $"An error occurred during 'Workflow1': {ex.Message}";
+}
+catch (FormatException ex)
+{
+    overallStatusMessage = $"An error occurred during 'Workflow1': {ex.Message}";
+}
 
-    try
-    {
-        int length = str.Length;
-    }
-    catch (NullReferenceException ex)
-    {
-        Console.WriteLine("Error: The reference is null. You tried to access the Length property of a null string variable." + ex.Message);
-    }
+if (overallStatusMessage == "operating procedure complete")
+{
+    Console.WriteLine("'Workflow1' completed successfully.");
+}
+else
+{
+    Console.WriteLine("An error occurred during 'Workflow1'.");
+    Console.WriteLine(overallStatusMessage);
+}
 
-    int[] numbers = new int[5];
-
-    try
+static void Workflow1(string[][] userEnteredValues)
+{
+    foreach (string[] userEntries in userEnteredValues)
     {
-        numbers[5] = 10; // This line will throw an IndexOutOfRangeException
-    }
-    catch (IndexOutOfRangeException ex)
-    {
-        Console.WriteLine("Error: Index out of range. You tried to access an element outside the array bounds." + ex.Message);
-    }
-
-    int num3 = 10;
-    int num4 = 0;
-
-    try
-    {
-        int result2 = num3 / num4; // This line will throw a DivideByZeroException
-    }
-    catch (DivideByZeroException ex)
-    {
-        Console.WriteLine("Error: Cannot divide by zero. " + ex.Message);
+        try
+        {
+            Process1(userEntries);
+            Console.WriteLine("'Process1' completed successfully.");
+            Console.WriteLine();
+        }
+        catch (FormatException ex)
+        {
+            Console.WriteLine("'Process1' encountered an issue, process aborted.");
+            Console.WriteLine(ex.Message);
+            Console.WriteLine();
+            throw;
+        }
+        catch (DivideByZeroException ex)
+        {
+            Console.WriteLine("'Process1' encountered an issue, process aborted.");
+            Console.WriteLine(ex.Message);
+            Console.WriteLine();
+            throw;
+        }
     }
 }
 
-catch (Exception ex) // This catch block will catch any other unexpected exceptions
+static void Process1(string[] userEntries)
 {
-    Console.WriteLine("An unexpected error occurred: " + ex.Message);
-}
+    int valueEntered;
 
-Console.WriteLine("Exiting program.");
+    foreach (string userValue in userEntries)
+    {
+        bool integerFormat = int.TryParse(userValue, out valueEntered);
+
+        if (integerFormat)
+        {
+            if (valueEntered != 0)
+            {
+                checked
+                {
+                    int calculatedValue = 4 / valueEntered;
+                }
+            }
+            else
+            {
+                throw new DivideByZeroException("Invalid data. User input values must be non-zero values.");
+            }
+        }
+        else
+        {
+            throw new FormatException("Invalid data. User input values must be valid integers.");
+        }
+    }
+}
